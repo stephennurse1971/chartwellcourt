@@ -80,49 +80,50 @@
                             {% endfor %}
                         </div>
                     </li>
-
-                    {% if CompanyDetails.companyDetails.headerDisplaySubProducts ==1 %}
-                        <!-- Nav Item #2 - Sub-Products -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                {% if CompanyDetails.companyDetails is not null %}
-                                    {{ CompanyDetails.companyDetails.titleSubProducts }}
-                                {% else %}
-                                    Sub-Products
-                                {% endif %}
-                            </a>
-                            {% if app.user %}
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {% set products = Product.getProductSubAll %}
-                                    {% for product in products %}
-                                        {% if product.isActive==1 %}
-                                            <a target="_blank" class="dropdown-item text-gray-600 ml-3"
-                                               href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
-                                            </a>
-                                        {% else %}
-                                            {% if is_granted('ROLE_ADMIN') and product.isActive ==0 %}
+                    {% if CompanyDetails.companyDetails is not null %}
+                        {% if CompanyDetails.companyDetails.headerDisplaySubProducts ==1 %}
+                            <!-- Nav Item #2 - Sub-Products -->
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {% if CompanyDetails.companyDetails is not null %}
+                                        {{ CompanyDetails.companyDetails.titleSubProducts }}
+                                    {% else %}
+                                        Sub-Products
+                                    {% endif %}
+                                </a>
+                                {% if app.user %}
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {% set products = Product.getProductSubAll %}
+                                        {% for product in products %}
+                                            {% if product.isActive==1 %}
                                                 <a target="_blank" class="dropdown-item text-gray-600 ml-3"
-                                                   href="{{ path('product_display', { product: product.product}) }}">
-                                                    <span style="color: red">{{ product.product }}*</span>
+                                                   href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
+                                                </a>
+                                            {% else %}
+                                                {% if is_granted('ROLE_ADMIN') and product.isActive ==0 %}
+                                                    <a target="_blank" class="dropdown-item text-gray-600 ml-3"
+                                                       href="{{ path('product_display', { product: product.product}) }}">
+                                                        <span style="color: red">{{ product.product }}*</span>
+                                                    </a>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {% set products = Product.getProductSubAll %}
+                                        {% for product in products %}
+                                            {% if product.isActive==1 %}
+                                                <a target="_blank" class="dropdown-item text-gray-600 ml-3"
+                                                   href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
                                                 </a>
                                             {% endif %}
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% else %}
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    {% set products = Product.getProductSubAll %}
-                                    {% for product in products %}
-                                        {% if product.isActive==1 %}
-                                            <a target="_blank" class="dropdown-item text-gray-600 ml-3"
-                                               href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
-                                            </a>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </li>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </li>
+                        {% endif %}
                     {% endif %}
 
 

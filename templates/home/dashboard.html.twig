@@ -4,30 +4,24 @@
 
 {% block body %}
     <h1 class="text-danger">Dashboard</h1>
-    <hr>
-
-    {% include 'template_parts_project_specific/dashboard_project_specific.html.twig' %}
-
+    {% include 'template_parts_project_specific/dashboard_project_specific1.html.twig' %}
     <br>
     <hr>
-    <br>
-
     <div class="row">
         <div class="col-2">
             <div class="border py-4">
-                <h2 style="color: red">Services/Products</h2>
+                <h2 style="color: red">Company</h2>
                 <ul>
                     <a target="_blank" href="{{ path('company_details_index') }}">Company Details</a>
                 </ul>
                 <ul>
-                    <a target="_blank" href="{{ path('product_index') }}">Interests</a>
+                    <a target="_blank" href="{{ path('product_index') }}">Products/Interests</a>
                 </ul>
             </div>
         </div>
         <div class="col-2">
             <div class="border py-4">
                 <h2 style="color: red">Website CMS</h2>
-
                 <ul>
                     <a target="_blank" href="{{ path('cms_copy_index') }}">Main Page Copy</a>
                 </ul>
@@ -61,16 +55,34 @@
         </div>
         <div class="col-12 col-md-2">
             <div class="border py-4">
-                <h2 style="color: red">SetUp</h2>
+                <h2 style="color: red">Users</h2>
+                <ul>
+                    <a target="_blank" href="{{ path('user_index') }}">Users</a>
+                </ul>
+                <ul>
+                    <a href="{{ path('log_index') }}">User log</a>
+                </ul>
+            </div>
+        </div>
+        <div class="col-12 col-md-2">
+            <div class="border py-4">
+                <h2 style="color: red">Set-Up</h2>
+                <ul>
+                    <a target="_blank" href="{{ path('languages_index') }}">Languages</a>
+                </ul>
+                <ul>
+                    <a target="_blank" href="{{ path('translation_index') }}">Translations</a>
+                </ul>
                 <ul>
                     <a target="_blank" href="{{ path('weather_index') }}">Weather</a>
                 </ul>
-
-                {% if app.request.getSchemeAndHttpHost() != 'https://stephen-nurse.com' %}
-                    <ul>
-                        <a class="btn btn-outline-success btn-sm" target="_blank"
-                           href="{{ path('export_live_database') }}">Export Live Data</a>
-                    </ul>
+                {% if CompanyDetails.companyDetails is not null %}
+                    {% if app.request.getSchemeAndHttpHost() == CompanyDetails.companyDetails.companyWebsite %}
+                        <ul>
+                            <a class="btn btn-outline-success btn-sm" target="_blank"
+                               href="{{ path('export_live_database') }}">Export Live Data</a>
+                        </ul>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

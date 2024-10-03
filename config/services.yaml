@@ -5,9 +5,11 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
   favicon_directory: '%kernel.project_dir%/public/administration/attachments/Favicons/'
+  icon_directory: '%kernel.project_dir%/public/administration/attachments/LanguageIcons/'
+  translations_directory: '%kernel.project_dir%/public/administration/attachments/Translations/'
   user_attachments_directory: '%kernel.project_dir%/public/administration/attachments/Users/'
-  website_photos_directory: '%kernel.project_dir%/public/administration/attachments/WebsitePhotos'
-  website_attachments_directory: '%kernel.project_dir%/public/administration/attachments/WebsiteAttachments'
+  website_photos_directory: '%kernel.project_dir%/public/administration/attachments/WebsitePhotos/'
+  website_attachments_directory: '%kernel.project_dir%/public/administration/attachments/WebsiteAttachments/'
   public: '%kernel.project_dir%/public/'
 
 

@@ -1,0 +1,37 @@
+<style>
+    .ck-content {
+        height: 500px;
+    }
+</style>
+{{ form_start(form) }}
+<div class="row">
+    <div class="col-2">
+        {{ form_row(form.language) }}
+        {{ form_row(form.abbreviation) }}
+        {{ form_row(form.linkedInOther) }}
+        {{ form_row(form.isActive) }}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-2">
+        {% if language.icon is not empty %}
+            {{ language.icon }}<br>
+            {% set img = asset('administration/attachments/LanguageIcons/'~language.icon) %}
+            <img height="50" width="50" src="{{ img }}" class="rounded-circle">
+            <a class="btn btn-sm btn-danger" href="{{ path('language_icon_delete', {'id': language.id}) }}">Delete
+                icon</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        {{ form_row(form.icon) }}
+
+    </div>
+</div>
+
+<button class="btn btn-success btn-sm">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -72,10 +72,6 @@ class CompanyDetails
 
 
 
-    /**
-     * @ORM\Column(type="text", length=255, nullable=true)
-     */
-    private $companyAddressMapLink;
 
 
 
@@ -135,7 +131,7 @@ class CompanyDetails
     private $companyEmailImportDirectory;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $companyEmailImportProcessedDirectory;
 
@@ -244,12 +240,60 @@ class CompanyDetails
      */
     private $headerDisplayInstructions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $titleProducts;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $titleSubProducts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $headerDisplayProducts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $headerDisplaySubProducts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $footerDisplaySubProducts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $includeContactFormHomePage;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $multiLingual;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $enableUserRegistration;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $registrationEmail;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $includeQRCodeHomePage;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $companyAddressMapLink;
 
 
     public function getId(): ?int
@@ -371,17 +415,7 @@ class CompanyDetails
         return $this;
     }
 
-    public function getCompanyAddressMapLink(): ?string
-    {
-        return $this->companyAddressMapLink;
-    }
 
-    public function setCompanyAddressMapLink(?string $companyAddressMapLink): self
-    {
-        $this->companyAddressMapLink = $companyAddressMapLink;
-
-        return $this;
-    }
 
 
 
@@ -396,10 +430,6 @@ class CompanyDetails
 
         return $this;
     }
-
-
-
-
 
 
 
@@ -516,7 +546,7 @@ class CompanyDetails
         return $this->companyEmailImportProcessedDirectory;
     }
 
-    public function setCompanyEmailImportProcessedDirectory(string $companyEmailImportProcessedDirectory): self
+    public function setCompanyEmailImportProcessedDirectory(?string $companyEmailImportProcessedDirectory): self
     {
         $this->companyEmailImportProcessedDirectory = $companyEmailImportProcessedDirectory;
 
@@ -771,6 +801,138 @@ class CompanyDetails
     public function setHeaderDisplayInstructions(?bool $headerDisplayInstructions): self
     {
         $this->headerDisplayInstructions = $headerDisplayInstructions;
+
+        return $this;
+    }
+
+    public function getTitleProducts(): ?string
+    {
+        return $this->titleProducts;
+    }
+
+    public function setTitleProducts(?string $titleProducts): self
+    {
+        $this->titleProducts = $titleProducts;
+
+        return $this;
+    }
+
+    public function getTitleSubProducts(): ?string
+    {
+        return $this->titleSubProducts;
+    }
+
+    public function setTitleSubProducts(?string $titleSubProducts): self
+    {
+        $this->titleSubProducts = $titleSubProducts;
+
+        return $this;
+    }
+
+    public function isHeaderDisplayProducts(): ?bool
+    {
+        return $this->headerDisplayProducts;
+    }
+
+    public function setHeaderDisplayProducts(?bool $headerDisplayProducts): self
+    {
+        $this->headerDisplayProducts = $headerDisplayProducts;
+
+        return $this;
+    }
+
+    public function isHeaderDisplaySubProducts(): ?bool
+    {
+        return $this->headerDisplaySubProducts;
+    }
+
+    public function setHeaderDisplaySubProducts(?bool $headerDisplaySubProducts): self
+    {
+        $this->headerDisplaySubProducts = $headerDisplaySubProducts;
+
+        return $this;
+    }
+
+    public function isFooterDisplaySubProducts(): ?bool
+    {
+        return $this->footerDisplaySubProducts;
+    }
+
+    public function setFooterDisplaySubProducts(?bool $footerDisplaySubProducts): self
+    {
+        $this->footerDisplaySubProducts = $footerDisplaySubProducts;
+
+        return $this;
+    }
+
+    public function isIncludeContactFormHomePage(): ?bool
+    {
+        return $this->includeContactFormHomePage;
+    }
+
+    public function setIncludeContactFormHomePage(?bool $includeContactFormHomePage): self
+    {
+        $this->includeContactFormHomePage = $includeContactFormHomePage;
+
+        return $this;
+    }
+
+    public function isMultiLingual(): ?bool
+    {
+        return $this->multiLingual;
+    }
+
+    public function setMultiLingual(?bool $multiLingual): self
+    {
+        $this->multiLingual = $multiLingual;
+
+        return $this;
+    }
+
+    public function isEnableUserRegistration(): ?bool
+    {
+        return $this->enableUserRegistration;
+    }
+
+    public function setEnableUserRegistration(?bool $enableUserRegistration): self
+    {
+        $this->enableUserRegistration = $enableUserRegistration;
+
+        return $this;
+    }
+
+    public function getRegistrationEmail(): ?string
+    {
+        return $this->registrationEmail;
+    }
+
+    public function setRegistrationEmail(?string $registrationEmail): self
+    {
+        $this->registrationEmail = $registrationEmail;
+
+        return $this;
+    }
+
+    public function isIncludeQRCodeHomePage(): ?bool
+    {
+        return $this->includeQRCodeHomePage;
+    }
+
+    public function setIncludeQRCodeHomePage(?bool $includeQRCodeHomePage): self
+    {
+        $this->includeQRCodeHomePage = $includeQRCodeHomePage;
+
+        return $this;
+    }
+
+    public function getCompanyAddressMapLink(): ?string
+    {
+        return $this->companyAddressMapLink;
+    }
+
+    public function setCompanyAddressMapLink(?string $companyAddressMapLink): self
+    {
+        $this->companyAddressMapLink = $companyAddressMapLink;
 
         return $this;
     }

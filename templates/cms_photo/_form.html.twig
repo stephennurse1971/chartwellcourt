@@ -17,43 +17,52 @@
             {{ form_row(form.product) }}
         </div>
     </div>
+    <div class="col-md-3">
+        <h2>Hyper-Link & Title</h2>
+        {{ form_row(form.link) }}
+    </div>
 
 </div>
 <div class="row">
     <div class="col-md-3">
         {{ form_row(form.photoOrVideo) }}
-
     </div>
 
     <div class="col-md-3">
         {{ form_row(form.ranking) }}
     </div>
+
     <div class="col-md-3">
         {{ form_row(form.title) }}
-        {{ form_row(form.link) }}
+
     </div>
 </div>
-
 <hr>
 
-
+<h2>Photo</h2>
 <div class="row">
-    <div class="col-md-2">
+
+    <div class="col-md-3">
         {% if cms_photo.photo is not empty %}
-            {{ cms_photo.photo }}<br>
+
             {% set loc = asset('administration/attachments/WebsitePhotos/'~cms_photo.photo) %}
+
             <a class="btn btn-outline-danger btn-sm" target="_blank"
                href="{{ path('cms_photo_view', {'id': cms_photo.id}) }}">
                 <img height="50" width="50" src="{{ loc }}" class="rounded-circle"></a>
             <a class="btn btn-sm btn-danger" href="{{ path('cms_photo_file_delete', {'id': cms_photo.id}) }}">Delete
                 photo</a>
+            <br>
         {% endif %}
     </div>
 </div>
+<br>
 
 <div class="row">
     <div class="col-md-2">
+        {{ cms_photo.photo }}<br>
         {{ form_row(form.photo) }}
+        <br>
 
     </div>
 </div>

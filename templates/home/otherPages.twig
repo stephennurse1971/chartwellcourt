@@ -29,14 +29,14 @@
                 <!------------------ FIRST GROUP OF TEXT AND PHOTOS --------------->
                 {% if Photo1.photo is empty %}
                     <div class="col-md-12">
-                        {% include 'parts/headings.twig' %}
+                        {% include 'headings.twig' %}
                         {% if Text1 is not null %}
                             <p>{{ Text1.contentText|raw }}  </p>
                         {% endif %}
                     </div>
                 {% else %}
                     <div class="col-md-6">
-                        {% include 'parts/headings.twig' %}
+                        {% include 'headings.twig' %}
                         {% if Text1 is not null %}
                             <p>{{ Text1.contentText|raw }}  </p>
                         {% endif %}
@@ -69,12 +69,12 @@
                 <!------------------ SECOND GROUP OF TEXT AND PHOTOS --------------->
                 {% if Photo2.photo is empty %}
                     <div class="col-md-12">
-                        {% include 'parts/headings2.twig' %}
+                        {% include 'headings2.twig' %}
                         <p>{{ Text2.contentText|raw }}  </p>
                     </div>
                 {% else %}
                     <div class="col-md-6">
-                        {% include 'parts/headings2.twig' %}
+                        {% include 'headings2.twig' %}
                         {% if Text2 is not null %}
                         <p>{{ Text2.contentText|raw }}  </p>
                         {% endif %}
@@ -106,12 +106,12 @@
                 <!------------------ THIRD GROUP OF TEXT AND PHOTOS --------------->
                 {% if Photo1.photo is empty %}
                     <div class="col-md-12">
-                        {% include 'parts/headings3.twig' %}
+                        {% include 'headings3.twig' %}
                         <p>{{ Text3.contentText|raw }}  </p>
                     </div>
                 {% else %}
                     <div class="col-md-6">
-                        {% include 'parts/headings3.twig' %}
+                        {% include 'headings3.twig' %}
                         {% if Text3 is not null %}
                         <p>{{ Text3.contentText|raw }}  </p>
                         {% endif %}

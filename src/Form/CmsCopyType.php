@@ -33,6 +33,12 @@ class CmsCopyType extends AbstractType
                 'choice_label'=>'product'
             ])
             ->add('tabTitle')
+            ->add('tabTitleFR', TextType::class, [
+                'required' => false,
+                'label' => 'Tab Title (French)'])
+            ->add('tabTitleDE', TextType::class, [
+                'required' => false,
+                'label' => 'Tab Title (German)'])
 
 
             ->add('contentTitle', TextType::class, [
@@ -69,7 +75,10 @@ class CmsCopyType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('ranking');
+            ->add('ranking')
+            ->add('pageCountUsers')
+            ->add('pageCountAdmin')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -10,7 +10,7 @@
         <tr>
             <th>Rank</th>
             <th>Product</th>
-            <th>Main/Sub</th>
+            <th>Main/<br>Sub</th>
             <th>Active</th>
             <th>Include<br>In Footer</th>
             <th>Comments</th>
@@ -21,7 +21,13 @@
         {% for product in products %}
             <tr>
                 <td>{{ product.ranking }}</td>
-                <td>{{ product.product }}</td>
+                <td>
+                {% if product.product is null %}
+                    <i style="background-color: yellow; color: red" class="fa fa-warning"></i>
+                    {% else %}
+                    {{ product.product }}
+                        {% endif %}
+                </td>
                 <td>{{ product.category }}</td>
                 <td style="text-align: center">
                     {% if product.isActive =="Yes" %}

@@ -19,6 +19,8 @@
             <th>GPS</th>
             <th>Time<br>Zone</th>
             <th>Ccy</th>
+            <th>Multi<br>Language</th>
+            <th>User<br>Registration</th>
             <th>Weather<br>Location</th>
             <th>Directions</th>
             <th>QR</th>
@@ -66,7 +68,7 @@
                     {% endif %}
                     <br>
                     {% if company_detail.companyEmailImportDirectory is not null %}
-                        (Import: {{ company_detail.companyEmailImportDirectory }} /{{ company_detail.companyEmailImportProcessedDirectory }} )
+                        (Import: {{ company_detail.companyEmailImportDirectory }} /{{ company_detail.companyEmailImportProcessedDirectory }})
                     {% endif %}
                 </td>
                 <td style="text-align: center">
@@ -110,6 +112,24 @@
                 <td style="text-align: center">
                     {{ company_detail.currency }}
                 </td>
+
+                <td style="text-align: center">
+                    {% if company_detail.multiLingual ==1 %}
+                        <i class="fa fa-check" style="color: green" class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-check" style="color: red" class="fa fa-remove"></i>
+                    {% endif %}
+                </td>
+
+                <td style="text-align: center">
+                    {% if company_detail.enableUserRegistration ==1 %}
+                        <i title="{{ company_detail.registrationEmail|raw }}" class="fa fa-check" style="color: green" class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-check" style="color: red" class="fa fa-remove"></i>
+                    {% endif %}
+                </td>
+
+
                 <td>
                     {{ company_detail.weatherLocation }}
                 </td>

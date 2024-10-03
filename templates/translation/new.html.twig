@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Translation{% endblock %}
+
+{% block body %}
+    <h1 style="color: red">New Translation</h1>
+
+    {{ include('translation/_form.html.twig') }}
+
+    <a class="btn btn-outline-primary" href="{{ path('translation_index') }}">Return to list</a>
+{% endblock %}

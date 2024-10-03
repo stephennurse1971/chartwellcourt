@@ -4,12 +4,12 @@
     {% for cms_copy in cms_copy_array %}
         {% if cms_copy.ranking == 1 %}
             {% if cms_copy.tabTitle is defined %}
-                {{ cms_copy.tabTitle }}
+                {{ attribute(cms_copy,'tabTitle'~Languages.getSelectedLanguageCode)|raw }}
             {% else %}
                 {% if CompanyDetails.getCompanyDetails is not null %}
                     {{ CompanyDetails.getCompanyDetails.companyName }}
                 {% else %}
-                    {{ product }}
+                    {{ product~Languages.getSelectedLanguageCode }}
                 {% endif %}
             {% endif %}
         {% endif %}
@@ -18,71 +18,70 @@
 
 
 {% block body %}
-    <!-- My Service section -->
     <section id="my-service-section" class="default-bg-white">
-        <!--  Default space  -->
         <div class="default-space"></div>
-        <!--  Default space  -->
-
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div class="defult-title">
-                        {% include 'home/parts/products_page/title.html.twig' %}
+                    <div class="default-title">
+                        {% include 'home/products_page/title.html.twig' %}
                     </div>
                 </div>
             </div>
-
 
             <div class="row">
-
+                {% if cms_photo_array is not empty %}
                 <div class="col-6">
-                    {% for cms_copy in cms_copy_array|sort((a, b) => a.ranking <=> b.ranking) %}
-                        <div class="row">
-                            <div class="col-12">
-                                <p>{{ cms_copy.contentText|raw }}</p>
+                    {% else %}
+                    <div class="col-12">
+                        {% endif %}
+                        {% for cms_copy in cms_copy_array|sort((a, b) => a.ranking <=> b.ranking) %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <p>{{ attribute(cms_copy,'contentText'~Languages.getSelectedLanguageCode)|raw }}</p>
                                     {% if cms_copy.attachment is not null %}
-                                        <a title="{{ cms_copy.attachment }}" target="_blank" href="{{ path('cms_copy_show_attachment',{id : cms_copy.id }) }}">
+                                        <a title="{{ cms_copy.attachment }}" target="_blank"
+                                           href="{{ path('cms_copy_show_attachment',{id : cms_copy.id }) }}">
                                             <i class="fa fa-paperclip"></i>
-                                        </a> 
-                                {% endif %}
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <div class="col-6">
-                    {% for cms_photo in cms_photo_array|sort((a, b) => a.ranking <=> b.ranking) %}
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="justify-content-center d-flex py-1 product-image-container m-auto ">
-                                {% include 'home/parts/products_page/photo_or_video.html.twig' %}
-                            </div>
-                        </div>
-                    </div>
                         {% endfor %}
+                    </div>
 
+                    <div class="col-6">
+                        {% for cms_photo in cms_photo_array|sort((a, b) => a.ranking <=> b.ranking) %}
+                            <div class="row">
+                                <div class="col-12 mb-5">
+                                    <div class="justify-content-center d-flex py-1 product-image-container m-auto">
+                                        {% include 'home/products_page/photo_or_video.html.twig' %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                     <!------------------ END FIRST GROUP OF PHOTOS --------------->
 
-                </div>
-
-
-                <div class="row">
-                    <div class="col-12">
-                        {% for sub_page in sub_pages %}
-                            <ul>
-                                <a target="_blank"
-                                   href="{{ path('sub_page_show', {id: sub_page.id} ) }}">{{ sub_page.title }}</a>
-                            </ul>
-                        {% endfor %}
+                    <div class="row">
+                        <div class="col-12">
+                            {% for sub_page in sub_pages %}
+                                <ul>
+                                    <a target="_blank"
+                                       href="{{ path('sub_page_show', {id: sub_page.id} ) }}">{{ sub_page.title }}</a>
+                                </ul>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-
     </section>
 
-
+    {% if include_contact =="Yes" %}
+        {% if CompanyDetails.companyDetails is not null %}
+            {% if CompanyDetails.companyDetails.includeContactFormHomePage ==1 %}
+                {% include 'home/parts/contact_us.html.twig' %}
+            {% endif %}
+        {% endif %}
+    {% endif %}
 {% endblock %}

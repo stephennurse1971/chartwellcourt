@@ -4,6 +4,11 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-gray-100 fixed-top shadow">
         <div class="container-fluid">
             <div class="logo">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a target="_blank" href="{{ path('company_details_edit', {'id': '1'}) }}">
+                        <i style="color: red" class="fa fa-pen"></i>
+                    </a>
+                {% endif %}
                 <a class="navbar-brand" href="{{ path('app_home') }}">
                     {% if CompanyDetails.getCompanyDetails is not null %}
                         <a style="color: black" href="{{ path('app_home') }}">
@@ -50,56 +55,46 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Products
+                            {{ CompanyDetails.companyDetails.titleProducts }}
                         </a>
-                        {% if app.user %}
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% set products = Product.getProductMainAll %}
-                                {% for product in products %}
-                                    {% if product.isActive==1 %}
-                                        <a target="_blank" class="text-gray-600 mb-3 ml-3"
-                                           href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
-                                        </a>
-                                    {% else %}
-                                        {% if is_granted('ROLE_ADMIN') and product.isActive ==0 %}
-                                            <a target="_blank" class="text-gray-600 mb-3 ml-3"
-                                               href="{{ path('product_display', { product: product.product}) }}">
-                                                <span style="color: red">{{ product.product }}*</span>
-                                            </a>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                {% set products = Product.getProductFooter %}
-                                {% for product in products %}
-                                    <a class="dropdown-item" target="_blank"
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% set products = Product.getProductMainAll %}
+                            {% for product in products %}
+                                {% if product.isActive==1 %}
+                                    <a target="_blank" class="dropdown-item text-gray-600 ml-3"
                                        href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
                                     </a>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                                {% else %}
+                                    {% if is_granted('ROLE_ADMIN') and product.isActive ==0 %}
+                                        <a target="_blank" class="dropdown-item text-gray-600 ml-3"
+                                           href="{{ path('product_display', { product: product.product}) }}">
+                                            <span style="color: red">{{ product.product }}*</span>
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </li>
 
-
+                    {% if CompanyDetails.companyDetails.headerDisplaySubProducts ==1 %}
                     <!-- Nav Item #2 - Sub-Products -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Resources
+                            {{ CompanyDetails.companyDetails.titleSubProducts }}
                         </a>
                         {% if app.user %}
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {% set products = Product.getProductSubAll %}
                                 {% for product in products %}
                                     {% if product.isActive==1 %}
-                                        <a target="_blank" class="text-gray-600 mb-3 ml-3"
+                                        <a target="_blank" class="dropdown-item text-gray-600 ml-3"
                                            href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
                                         </a>
                                     {% else %}
                                         {% if is_granted('ROLE_ADMIN') and product.isActive ==0 %}
-                                            <a target="_blank" class="text-gray-600 mb-3 ml-3"
+                                            <a target="_blank" class="dropdown-item text-gray-600 ml-3"
                                                href="{{ path('product_display', { product: product.product}) }}">
                                                 <span style="color: red">{{ product.product }}*</span>
                                             </a>
@@ -112,19 +107,18 @@
                                 {% set products = Product.getProductSubAll %}
                                 {% for product in products %}
                                     {% if product.isActive==1 %}
-                                        <a target="_blank" class="text-gray-600 mb-3 ml-3"
+                                        <a target="_blank" class="dropdown-item text-gray-600 ml-3"
                                            href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}
                                         </a>
                                     {% endif %}
                                 {% endfor %}
-                                <a target="_blank" class="text-gray-600 mb-3 ml-3"
-                                   href="{{ path('podcast_episodes_index') }}">Podcasts</a>
                             </div>
                         {% endif %}
                     </li>
+                    {% endif %}
 
 
-                    {% include 'template_parts_project_specific/header_project_specific.html.twig' %}
+                    {% include 'template_parts_project_specific/header_project_specific1.html.twig' %}
 
                     <!-- Nav Item #5 - Contact -->
                     {% if CompanyDetails.getCompanyDetails is not null %}
@@ -194,16 +188,16 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ app.user.fullName }}
+
+
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <i title="Super-Admin" style="color: green" class="fa fa-hat-wizard"></i>
+                                    {% endif %}
+
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <i title="Admin" style="color: orange" class="fa fa-user-tie"></i>
+                                    {% endif %}
                                 </a>
-
-                                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <i title="Super-Admin" style="color: green" class="fa fa-hat-wizard"></i>
-                                {% endif %}
-
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <i title="Admin" style="color: orange" class="fa fa-user-tie"></i>
-                                {% endif %}
-
 
                                 {% include 'template_parts_project_specific/header_project_specific3.html.twig' %}
 
@@ -215,8 +209,32 @@
                                 </div>
                             </li>
                         {% else %}
-                            <a class=" btn btn-sm btn-outline-dark" href="{{ path('app_login') }}">Login</a>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-dark btn-sm" href="{{ path('app_login') }}">Login</a>
+                            </li>
                         {% endif %}
+                    {% endif %}
+
+
+                    {% if CompanyDetails.getCompanyDetails is not null and CompanyDetails.companyDetails.multiLingual ==1 and Languages.getLanguages != null and Languages.LanguageSelected != null %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset('administration/attachments/LanguageIcons/'~Languages.LanguageSelected.icon) }}"
+                                     height="30" width=30">
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                {% for language in Languages.getLanguages %}
+                                    {% if language.language != Languages.LanguageSelected.language %}
+                                        <a class="dropdown-item"
+                                           href="{{ path('select_default_language',{id:language.id}) }}">
+                                            <img src="{{ asset('administration/attachments/LanguageIcons/'~language.icon) }}"
+                                                 height="30" width=30">
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </li>
                     {% endif %}
 
                 </ul>

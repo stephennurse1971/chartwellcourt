@@ -1,7 +1,7 @@
 <style>
     .ck-editor__editable {
-        min-height: 600px;
-        max-height: 600px
+        min-height: 400px;
+        max-height: 400px
     }
 </style>
 {{ form_start(form) }}
@@ -17,13 +17,13 @@
             {{ form_row(form.staticPageName) }}
         </div>
         <div class="product-container">
-            <h2>Product</h2>
             {{ form_row(form.product) }}
         </div>
     </div>
     <div class="col-md-3">
-        <h2>Tab Title</h2>
-        {{ form_row(form.ranking) }}
+        <h2>Attachments & Hyperlinks</h2>
+        {{ form_row(form.hyperlinks) }}
+
 
         {% if cms_copy.attachment is not null %}
             <b>Attachment:</b><br>
@@ -37,6 +37,7 @@
                 <i title="{{ cms_copy.attachment }}" class="fa fa-paperclip"></i>
             </a>
             <br>
+            {{ form_row(form.hyperlinks) }}
         {% endif %}
 
         <div class="file-upload-container">
@@ -44,9 +45,29 @@
         </div>
     </div>
     <div class="col-md-3">
-        <h2>Tab Title</h2>
+        <h2>Ranking & User Count</h2>
+        <div class="row">
+            {{ form_row(form.ranking) }}
+        </div>
+        <div class="row">
+            {{ form_row(form.pageCountUsers) }}
+            {{ form_row(form.pageCountAdmin) }}
+        </div>
+    </div>
+
+</div>
+<hr>
+<h2>Tab Title</h2>
+<div class="row">
+    <div class="col-md-3">
+
         {{ form_row(form.tabTitle) }}
-        {{ form_row(form.hyperlinks) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.tabTitleFR) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.tabTitleDE) }}
     </div>
 </div>
 <hr>
@@ -82,7 +103,7 @@
 </div>
 
 
-<button class="btn btn-success btn-sm">{{ button_label|default('Save') }}</button>
+<button class="btn btn-success btn-sm mb-1">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
 
 

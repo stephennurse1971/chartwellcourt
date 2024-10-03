@@ -15,7 +15,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class   HomeController extends AbstractController
 {
@@ -25,7 +24,11 @@ class   HomeController extends AbstractController
     public function index(CmsCopyRepository $cmsCopyRepository, CmsPhotoRepository $cmsPhotoRepository, SubPageRepository $subPageRepository, CompanyDetailsRepository $companyDetailsRepository): Response
     {
         $companyDetails = $companyDetailsRepository->find('1');
-        $homePagePhotosOnly = $companyDetails->isHomePagePhotosOnly();
+        $homePagePhotosOnly = 0;
+        if ($companyDetails) {
+            $homePagePhotosOnly = $companyDetails->isHomePagePhotosOnly();
+        }
+
         $cms_copy = [];
         $cms_photo = [];
         $product = [];
@@ -37,10 +40,10 @@ class   HomeController extends AbstractController
             'staticPageName' => 'Home'
         ]);
 
-
         if ($homePagePhotosOnly == 1) {
             return $this->render('home/home.html.twig', [
-                'photos' => $cms_photo
+                'photos' => $cms_photo,
+                'include_contact' => 'Yes'
             ]);
         } else {
             return $this->render('/home/products.html.twig', [
@@ -48,7 +51,7 @@ class   HomeController extends AbstractController
                 'cms_copy_array' => $cms_copy,
                 'cms_photo_array' => $cms_photo,
                 'sub_pages' => $sub_pages,
-                'include_contact' => 'No'
+                'include_contact' => 'Yes'
             ]);
         }
     }
@@ -83,7 +86,7 @@ class   HomeController extends AbstractController
             $manager->flush();
         }
         $manager->flush();
-        return $this->redirectToRoute('app_home');
+        return $this->redirectToRoute('app_login');
     }
 
 
@@ -97,9 +100,19 @@ class   HomeController extends AbstractController
     }
 
     /**
+     * @Route("/advanced_dashboard", name="advanced_dashboard")
+     * @Security("is_granted('ROLE_ADMIN')")
+     */
+    public function advancedDashboard()
+    {
+        return $this->render('template_parts_project_specific/advanced_dashboard_specific.html.twig', []);
+    }
+
+
+    /**
      * @Route("/interests/{product}", name="product_display")
      */
-    public function articles(string $product, CmsCopyRepository $cmsCopyRepository, CmsPhotoRepository $cmsPhotoRepository, SubPageRepository $subPageRepository, ProductRepository $productRepository): Response
+    public function articles(string $product, CmsCopyRepository $cmsCopyRepository, CmsPhotoRepository $cmsPhotoRepository, SubPageRepository $subPageRepository, ProductRepository $productRepository, \Symfony\Component\Security\Core\Security $security, EntityManagerInterface $entityManager): Response
     {
         $productEntity = $productRepository->findOneBy([
             'product' => $product
@@ -109,11 +122,31 @@ class   HomeController extends AbstractController
             $cms_copy = $cmsCopyRepository->findBy([
                 'product' => $productEntity
             ]);
+            $cms_copy_ranking1 = $cmsCopyRepository->findOneBy([
+                'product' => $productEntity,
+                'ranking' => '1',
+            ]);
         } else {
             $cms_copy = $cmsCopyRepository->findBy([
                 'staticPageName' => $product
             ]);
+            $cms_copy_ranking1 = $cmsCopyRepository->findOneBy([
+                'staticPageName' => $product,
+                'ranking' => '1',
+            ]);
         }
+
+        if($security->getUser()) {
+            if (in_array('ROLE_ADMIN', $security->getUser()->getRoles())) {
+                $pageCountAdmin = $cms_copy_ranking1->getPageCountAdmin();
+                $cms_copy_ranking1->setPageCountAdmin($pageCountAdmin + 1);
+            }
+        }
+                $pageCountUser = $cms_copy_ranking1->getPageCountUsers();
+                $cms_copy_ranking1->setPageCountUsers($pageCountUser + 1);
+                $entityManager->flush($cms_copy_ranking1);
+
+
 
         if ($productEntity) {
             $cms_photo = $cmsPhotoRepository->findBy([
@@ -204,7 +237,7 @@ class   HomeController extends AbstractController
         if ($contactFirstName == null) {
             $firstName = "";
             $lastName = $company;
-            $company ="";
+            $company = "";
         }
         if ($contactFirstName != null) {
             $firstName = $contactFirstName;

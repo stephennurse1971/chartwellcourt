@@ -14,9 +14,9 @@
         {% endif %}
     </h1>
 
-    {{ include('cms_photo/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('cms_photo/_form.html.twig', {'button_label': 'Save'}) }}
 
-    <a class="btn btn-outline-info btn-sm" href="{{ path('cms_photo_index') }}">Return to list</a>
+    <a class="btn btn-outline-info btn-sm mt-2 mb-2" href="{{ path('cms_photo_index') }}">Return to list</a>
 
     {{ include('cms_photo/_delete_form.html.twig') }}
 {% endblock %}

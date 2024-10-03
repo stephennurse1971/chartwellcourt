@@ -31,10 +31,49 @@
                 <br><br>
                 <a href="{{ path('app_forgot_password_request') }}">Forgot password</a>
                 <br><br><br>
+
+
+                {% if CompanyDetails.companyDetails is not null %}
+                    {% if CompanyDetails.companyDetails.enableUserRegistration ==1 %}
+                        <h1 style="color: red" class="h3 mb-3 font-weight-normal">Welcome New Users</h1>
+                        If you would like to register for this website, please click <a href="{{ path('app_register') }}">here</a>
+
+
+                    {% endif %}
+                {% endif %}
             </form>
-            {% if app.environment=='dev' %}
-                <hr><br><br><br><br>
-                <button onclick="fillForm()"><i class="fa fa-info-circle"> </i> Stephen (Super-Admin)</button>
+            <hr>
+            <br><br><br><br>
+
+
+            {% if CompanyDetails.companyDetails is not null %}
+                {% if app.request.getSchemeAndHttpHost() != CompanyDetails.companyDetails.companyWebsite %}
+
+                    <button onclick="fillForm()"><i class="fa fa-info-circle"> </i> nurse_stephen@hotmail.com
+                        (Super-Admin)
+                    </button>
+
+                    <br>
+                    <button onclick="fillForm2()"><i class="fa fa-info-circle"> </i> nurse_stephen2@hotmail.com
+                        (Super-Admin)
+                    </button>
+                    <br>
+                {% endif %}
+            {% else %}
+                <b>Please set up your "Company Details" profile.</b>
+                <br>
+                <br>
+                <br>
+
+                <button onclick="fillForm()"><i class="fa fa-info-circle"> </i> nurse_stephen@hotmail.com
+                    (Super-Admin)
+                </button>
+
+                <br>
+                <button onclick="fillForm2()"><i class="fa fa-info-circle"> </i> nurse_stephen2@hotmail.com
+                    (Super-Admin)
+                </button>
+                <br>
             {% endif %}
         </div>
     </div>
@@ -46,5 +85,11 @@
             $("#inputEmail").val("nurse_stephen@hotmail.com").change();
             $("#inputPassword").val("Descartes99").change();
         }
+
+        function fillForm2() {
+            $("#inputEmail").val("nurse_stephen2@hotmail.com").change();
+            $("#inputPassword").val("Descartes99").change();
+        }
+
     </script>
 {% endblock %}

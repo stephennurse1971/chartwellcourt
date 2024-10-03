@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Languages{% endblock %}
+
+{% block body %}
+    <h1 style="color: red">Languages</h1>
+
+    <table class="table table-responsive">
+        <thead>
+        <tr>
+            <th>Active</th>
+            <th>Language</th>
+            <th>Abbreviation</th>
+            <th>LinkedIn Other</th>
+            <th>Icon</th>
+            <th>#</th>
+            <th>#</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for language in languages %}
+            <tr>
+                <td data-sort="{{ language.isActive }}" style="text-align: center">
+                    {% if language.isActive ==1 %}
+                        <i style="color: green" class="fa fa-check"></i>
+                    {% else %}
+                        <i style="color: red" class="fa fa-remove"></i>
+                    {% endif %}
+                </td>
+                <td>{{ language.language }}</td>
+                <td style="text-align: center">{{ language.abbreviation }}</td>
+                <td style="text-align: center">
+                    {% if language.linkedInOther ==1 %}
+                        <i style="color: green" class="fa fa-check"></i>
+                    {% else %}
+                        <i style="color: red" class="fa fa-remove"></i>
+                    {% endif %}
+                    {#                    {{ language.linkedInOther }} #}
+                </td>
+                <td style="text-align: center">
+                    {% if language.icon is not empty %}
+                        {% set icon = asset('administration/attachments/LanguageIcons/')~language.icon %}
+                        <img height="50" width="50" src="{{ icon }}" class="rounded-circle test">
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn btn-outline-danger btn-sm" href="{{ path('languages_edit', {'id': language.id}) }}">Edit</a>
+                </td>
+                <td>
+                    <form method="post" action="{{ path('languages_delete', {'id': language.id}) }}"
+                          onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ language.id) }}">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success btn-sm" href="{{ path('languages_new') }}">New</a>
+{% endblock %}
+
+
+{% block datatable %}
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                'pageLength': 100,
+                "order": [[0, 'desc'], [1, 'asc']],
+                "paging": false,
+                "searching": false,
+                "bInfo": false
+            });
+        });
+    </script>
+{% endblock datatable %}

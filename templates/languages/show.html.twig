@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Languages{% endblock %}
+
+{% block body %}
+    <h1 style="color: red">Languages</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ language.id }}</td>
+            </tr>
+            <tr>
+                <th>Language</th>
+                <td>{{ language.language }}</td>
+            </tr>
+            <tr>
+                <th>Abbreviation</th>
+                <td>{{ language.abbreviation }}</td>
+            </tr>
+            <tr>
+                <th>Icon</th>
+                <td>{{ language.icon }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-primary btn-sm" href="{{ path('languages_index') }}">Return to list</a>
+
+    <a class="btn btn-outline-danger btn-sm" href="{{ path('languages_edit', {'id': language.id}) }}">Edit</a>
+
+    {{ include('languages/_delete_form.html.twig') }}
+{% endblock %}

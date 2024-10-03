@@ -5,18 +5,20 @@
 {% block body %}
     <h1 style="color: red">Log index</h1>
 
-    <table class="table">
+    <table class="table table-responsive">
         <thead>
-            <tr>
-                <th>Date</th>
-                <th>User</th>
-                <th>#</th>
-            </tr>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>User</th>
+            <th>#</th>
+        </tr>
         </thead>
         <tbody>
         {% for log in logs %}
             <tr>
-                <td data-sort="{{ log.createdAt|date('Y-m-d H:i') }}">{{ log.createdAt ? log.createdAt|date('d-M-Y H:i') : '' }}</td>
+                <td data-sort="{{ log.createdAt|date('Y-m-d H:i') }}">{{ log.createdAt ? log.createdAt|date('d-M-Y') : '' }}</td>
+                <td data-sort="{{ log.createdAt|date('Y-m-d H:i') }}">{{ log.createdAt ? log.createdAt|date('H:i') : '' }}</td>
                 <td>
                     <a target="_blank" class="dropdown-item" href="{{ path('user_edit', {'fullName': log.user.fullName}) }}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>

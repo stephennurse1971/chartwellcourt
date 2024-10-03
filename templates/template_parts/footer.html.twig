@@ -17,115 +17,119 @@
                                     </a>
                                 {% endif %}
                             </h6>
-
                         </div>
                         <!-- Grid column -->
 
                         <hr class="w-100 clearfix d-md-none"/>
 
                         <!-- Grid column -->
-
-                        <div style="text-align: left" class=" col-md-12 col-lg-4 mx-auto  mt-3 ">
-                            {% if CompanyDetails.companyDetails.footerDisplayProducts ==1 %}
-                                <h6 class="text-uppercase mb-4 font-weight-bold">Products</h6>
-                                <div class="row">
-                                    {% set products = Product.getProductFooter %}
-                                    {% for i in 1..2 %}
-                                        {% if i == 1 %}
-                                            <div class="col-md-4">
-                                                {% for product in products %}
-                                                    {% if loop.index < 6 %}
-                                                        <div>
-                                                            <li>
-                                                                <a target="_blank" class="text-white mb-1"
-                                                                   href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}</a>
-                                                            </li>
-                                                        </div>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
+                        {% if CompanyDetails.companyDetails is not null %}
+                            <div style="text-align: left" class=" col-md-12 col-lg-4 mx-auto  mt-3 ">
+                                {% if CompanyDetails.companyDetails.footerDisplayProducts ==1 %}
+                                    <h6 class="text-uppercase mb-4 font-weight-bold">
+                                        {% if CompanyDetails.companyDetails is not null and CompanyDetails.companyDetails.titleProducts is not null %}
+                                            {{ CompanyDetails.companyDetails.titleProducts }}
                                         {% else %}
-                                            <div class="col-md-6">
-                                                {% for product in products %}
-                                                    {% if loop.index > 5 %}
-                                                        <div>
-                                                            <li>
-                                                                <a target="_blank" class="text-white mb-1"
-                                                                   href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}</a>
-                                                            </li>
-                                                        </div>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </div>
-
+                                            Products
                                         {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-
-                        <!-- Grid column -->
-
-                        <hr class="w-100 clearfix d-md-none"/>
-
-                        <!-- Grid column -->
-                        <hr class="w-100 clearfix d-md-none"/>
-
-                        <!-- Grid column -->
-
-                        <div class="col-md-6 mt-3 col-lg-2 mx-auto">
-                            {% if CompanyDetails.companyDetails.footerDisplayContactDetails ==1 %}
-                                <h6 class="text-uppercase mb-4 font-weight-bold">Contact
-                                    <a class="btn btn-outline-info btn-sm" href="{{ path('create_vcard_company') }}">
-                                        <i style="color: yellow" class="fas fa-address-card mr-0"></i>
-                                    </a>
-                                </h6>
-                                <p>
-                                    <a target="_blank" href="{{ path('office_address') }}">
-                                        <i style="color: red" class="fa fa-map-marker mr-3"></i></a>
-                                    {% if CompanyDetails.getCompanyDetails is not null %}
-                                        {% if CompanyDetails.companyDetails.footerDisplayAddress ==1 %}
-                                            {{ CompanyDetails.getCompanyDetails.companyAddressStreet }},
-                                            {{ CompanyDetails.getCompanyDetails.companyAddressTown }},
-                                            {{ CompanyDetails.getCompanyDetails.companyAddressCity }}
-                                            {{ CompanyDetails.getCompanyDetails.companyAddressPostalCode }}
-                                        {% endif %}
-                                    {% endif %}
-                                </p>
-                                <p>
-                                <p>
-                                    {% if CompanyDetails.getCompanyDetails.companyEmail is not null %}
-                                        <a href="mailto:{{ CompanyDetails.getCompanyDetails.companyEmail }}">
-                                            <i class="fas fa-envelope mr-3"> </i></a>
-                                        {{ CompanyDetails.getCompanyDetails.companyEmail }}
-                                    {% endif %}
-                                </p>
-
-                                {% if CompanyDetails.companyDetails.footerDisplayTelNumbers ==1 %}
-                                    <p>
-                                        {% if CompanyDetails.getCompanyDetails.companyTel is not null %}
-                                            <a href="tel:{{ CompanyDetails.getCompanyDetails.companyTel|replace({' ': ''}) }}"><i
-                                                        class="fas fa-phone mr-3"></i></a>
-                                            {{ CompanyDetails.getCompanyDetails.companyTel }}
-                                        {% endif %}
-                                    </p>
-                                    <p>
-                                        {% if CompanyDetails.getCompanyDetails.companyMobile is not null %}
-                                            <a target="_blank"
-                                               href="https://wa.me/{{ CompanyDetails.getCompanyDetails.companyMobile|replace({' ': ''}) }}">
-                                                <i class="fab fa-whatsapp mr-3"
-                                                   style="color:green; text-align: center"></i></a>
-                                            {{ CompanyDetails.getCompanyDetails.companyMobile }}
-                                        {% endif %}
-                                    </p>
+                                    </h6>
+                                    <div class="row">
+                                        {% set products = Product.getProductFooter %}
+                                        {% for i in 1..2 %}
+                                            {% if i == 1 %}
+                                                <div class="col-md-4">
+                                                    {% for product in products %}
+                                                        {% if loop.index < 6 %}
+                                                            <div>
+                                                                <li>
+                                                                    <a target="_blank" class="mb-1"
+                                                                       href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}</a>
+                                                                </li>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                <div class="col-md-6">
+                                                    {% for product in products %}
+                                                        {% if loop.index > 5 %}
+                                                            <div>
+                                                                <li>
+                                                                    <a target="_blank" class="mb-1"
+                                                                       href="{{ path('product_display', { product: product.product}) }}">{{ product.product }}</a>
+                                                                </li>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
-                            {% endif %}
-                        </div>
+                            </div>
 
-                        <!-- Grid column -->
+                            <!-- Grid column -->
 
-                        <!-- Grid column -->
-                        {% if CompanyDetails.getCompanyDetails is not null %}
+                            <hr class="w-100 clearfix d-md-none"/>
+
+                            <!-- Grid column -->
+                            <hr class="w-100 clearfix d-md-none"/>
+
+                            <!-- Grid column -->
+
+                            <div class="col-md-6 mt-3 col-lg-2 mx-auto">
+                                {% if CompanyDetails.companyDetails.footerDisplayContactDetails ==1 %}
+                                    <h6 class="text-uppercase mb-4 font-weight-bold">Contact
+                                        <a class="btn btn-outline-info btn-sm"
+                                           href="{{ path('create_vcard_company') }}">
+                                            <i style="color: yellow" class="fas fa-address-card mr-0"></i>
+                                        </a>
+                                    </h6>
+                                    <p>
+                                        <a target="_blank" href="{{ path('office_address') }}">
+                                            <i style="color: red" class="fa fa-map-marker mr-3"></i></a>
+                                        {% if CompanyDetails.getCompanyDetails is not null %}
+                                            {% if CompanyDetails.companyDetails.footerDisplayAddress ==1 %}
+                                                {{ CompanyDetails.getCompanyDetails.companyAddressStreet }},
+                                                {{ CompanyDetails.getCompanyDetails.companyAddressTown }},
+                                                {{ CompanyDetails.getCompanyDetails.companyAddressCity }}
+                                                {{ CompanyDetails.getCompanyDetails.companyAddressPostalCode }}
+                                            {% endif %}
+                                        {% endif %}
+                                    </p>
+                                    <p>
+                                    <p>
+                                        {% if CompanyDetails.getCompanyDetails.companyEmail is not null %}
+                                            <a href="mailto:{{ CompanyDetails.getCompanyDetails.companyEmail }}">
+                                                <i class="fas fa-envelope mr-3"> </i></a>
+                                            {{ CompanyDetails.getCompanyDetails.companyEmail }}
+                                        {% endif %}
+                                    </p>
+
+                                    {% if CompanyDetails.companyDetails.footerDisplayTelNumbers ==1 %}
+                                        <p>
+                                            {% if CompanyDetails.getCompanyDetails.companyTel is not null %}
+                                                <a href="tel:{{ CompanyDetails.getCompanyDetails.companyTel|replace({' ': ''}) }}"><i
+                                                            class="fas fa-phone mr-3"></i></a>
+                                                {{ CompanyDetails.getCompanyDetails.companyTel }}
+                                            {% endif %}
+                                        </p>
+                                        <p>
+                                            {% if CompanyDetails.getCompanyDetails.companyMobile is not null %}
+                                                <a target="_blank"
+                                                   href="https://wa.me/{{ CompanyDetails.getCompanyDetails.companyMobile|replace({' ': ''}) }}">
+                                                    <i class="fab fa-whatsapp mr-3"
+                                                       style="color:green; text-align: center"></i></a>
+                                                {{ CompanyDetails.getCompanyDetails.companyMobile }}
+                                            {% endif %}
+                                        </p>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <!-- Grid column -->
+
+                            <!-- Grid column -->
 
                             <div style="text-align: left" class="col-md-6 mt-3 col-lg-2 mx-auto">
                                 {% if CompanyDetails.companyDetails.footerDisplaySocialMedia ==1 %}
@@ -182,8 +186,8 @@
                                     {% endif %}
                                 {% endif %}
                             </div>
-
                         {% endif %}
+
                     </div>
                 </div>
                 <!--Grid row-->

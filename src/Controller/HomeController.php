@@ -136,16 +136,17 @@ class   HomeController extends AbstractController
             ]);
         }
 
-        if($security->getUser()) {
-            if (in_array('ROLE_ADMIN', $security->getUser()->getRoles())) {
-                $pageCountAdmin = $cms_copy_ranking1->getPageCountAdmin();
-                $cms_copy_ranking1->setPageCountAdmin($pageCountAdmin + 1);
+        if($cms_copy_ranking1) {
+            if ($security->getUser()) {
+                if (in_array('ROLE_ADMIN', $security->getUser()->getRoles())) {
+                    $pageCountAdmin = $cms_copy_ranking1->getPageCountAdmin();
+                    $cms_copy_ranking1->setPageCountAdmin($pageCountAdmin + 1);
+                }
             }
+            $pageCountUser = $cms_copy_ranking1->getPageCountUsers();
+            $cms_copy_ranking1->setPageCountUsers($pageCountUser + 1);
+            $entityManager->flush($cms_copy_ranking1);
         }
-                $pageCountUser = $cms_copy_ranking1->getPageCountUsers();
-                $cms_copy_ranking1->setPageCountUsers($pageCountUser + 1);
-                $entityManager->flush($cms_copy_ranking1);
-
 
 
         if ($productEntity) {

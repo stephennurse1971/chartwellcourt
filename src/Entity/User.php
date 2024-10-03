@@ -50,6 +50,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $lastName;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $emailVerified;
+
 
 
     public function getId(): ?int
@@ -167,6 +172,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullName(): ?string
     {
         return $this->firstName . " " . $this->lastName;
+    }
+
+    public function isEmailVerified(): ?bool
+    {
+        return $this->emailVerified;
+    }
+
+    public function setEmailVerified(?bool $emailVerified): self
+    {
+        $this->emailVerified = $emailVerified;
+
+        return $this;
     }
 
 

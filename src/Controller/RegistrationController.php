@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -20,7 +21,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer,\App\Services\CompanyDetails $companyDetails): Response
+    public function register(Request $request,UserPasswordHasherInterface $passwordEncoder, MailerInterface $mailer,\App\Services\CompanyDetails $companyDetails): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -30,7 +31,7 @@ class RegistrationController extends AbstractController
             // encode the plain password
             $user->setEmailVerified(false);
             $user->setPassword(
-                $passwordEncoder->encodePassword(
+                $passwordEncoder->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )

@@ -28,19 +28,18 @@
           rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="{{ asset('admin/css/font.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/small-device.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/medium-device.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/large-device.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/standard/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/standard/small-device.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/standard/medium-device.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/standard/large-device.css') }}">
     <link rel="stylesheet" href="{{ asset('calendar/calendar-2/dist/zabuto_calendar.min.css') }}"/>
 
     {% block topjs %}
 
     {% endblock topjs %}
     <!-- Custom styles for this template-->
-    <link href="{{ asset('/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/standard/sb-admin-2.css') }}" rel="stylesheet">
     <style>
-
         thead {
             background-color: #f1efea;
         }
@@ -276,7 +275,7 @@
 {% endblock additionaljs %}
 
 <script>
-     ClassicEditor
+    ClassicEditor
         .create(document.querySelector('#sub_page_content'))
         .catch(error => {
             console.error(error);

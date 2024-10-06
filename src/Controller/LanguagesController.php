@@ -98,9 +98,9 @@ class LanguagesController extends AbstractController
             return $this->redirectToRoute('languages_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('languages/edit.html.twig', [
+        return $this->render('languages/edit.html.twig', [
             'language' => $language,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -147,12 +147,12 @@ class LanguagesController extends AbstractController
     /**
      * @Route("/set/default/language/{id}", name="select_default_language")
      */
-public function setDefaultLanguage(Request $request, Languages $languages)
-{
-   $session = $request->getSession();
-   $session->set('selected_language', $languages->getLanguage());
-   return $this->redirect($request->headers->get('referer'));
-}
+    public function setDefaultLanguage(Request $request, Languages $languages)
+    {
+        $session = $request->getSession();
+        $session->set('selected_language', $languages->getLanguage());
+        return $this->redirect($request->headers->get('referer'));
+    }
 
 
 

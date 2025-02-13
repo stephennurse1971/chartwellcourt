@@ -1,45 +1,52 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}
     Users
 {% endblock %}
 
 {% block body %}
-
     <h1 style="color: red">Users</h1>
-    <div class="row">
-        <div class="col-2">
-            <a class="btn btn-success btn-sm" href="{{ path('user_new') }}">New</a>
-        </div>
-    </div>
-    <br>
-
-    <table class="table table-striped">
+    {% include 'user/parts/import_and_export_buttons.html.twig' %}
+    <table class="table table-responsive small">
         <thead>
         <tr>
-            <th></th>
+            <th>Photo</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Verified</th>
+            <th>Mobile</th>
+            {% include 'user/parts/index_addresses_header.html.twig' %}
+            {% include 'user/parts/index_birthdays_header.html.twig' %}
+            {% include 'user/parts/index_telephone_numbers_header.html.twig' %}
+            {% include 'user/parts/index_log_vcf_buttons_headers.html.twig' %}
         </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
-                <td style="text-align: right">
-                    <a target="_blank" href="{{ path('user_edit', {'fullName': user.fullName}) }}">{{ user.id }}</a>
-                </td>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.lastName }}</td>
-                <td>{{ user.email }}</td>
-                <td style="text-align: center">
-                    {% if user.emailVerified ==1 %}
-                        <i style="color: green" class="fa fa-check">
-                    {% else %}
-                            <i style="color: red" class="fa fa-remove">
+                <td>
+                    {% if user.photo is not empty %}
+                        {% set loc = asset(user_photos_directory ~ user.photo) %}
+                        <a class="btn btn-outline-danger btn-sm" target="_blank"
+                           href="{{ path('user_photo_view', {'id': user.id}) }}">
+                            <img height="50" width="50" src="{{ loc }}" class="rounded-circle"></a>
+                        <br>
                     {% endif %}
                 </td>
+                <td>
+                <a target="_blank" href="{{ path('user_edit', {id: user.id}) }}">
+                    {{ user.firstName }}
+                </a>
+                </td>
+                <td>{{ user.lastName }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {{ user.mobile }}
+                </td>
+
+                {% include 'user/parts/index_addresses_body.html.twig' %}
+                {% include 'user/parts/index_birthdays_body.html.twig' %}
+                {% include 'user/parts/index_telephone_numbers_body.html.twig' %}
+                {% include 'user/parts/index_log_vcf_buttons_body.html.twig' %}
             </tr>
         {% endfor %}
         </tbody>
@@ -52,7 +59,7 @@
         $(document).ready(function () {
             $('.table').DataTable({
                 'pageLength': 100,
-                "order": [[0, 'asc']],
+                "order": [[1, 'asc'], [2, 'asc']],
                 "paging": false,
                 "searching": false,
                 "bInfo": false

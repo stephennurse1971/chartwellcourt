@@ -5,105 +5,107 @@ namespace App\Entity;
 use App\Repository\LanguagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=LanguagesRepository::class)
- */
+#[ORM\Entity(repositoryClass: LanguagesRepository::class)]
+#[ORM\Table(name: "languages")]
 class Languages
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+#[ORM\Id]
+#[ORM\GeneratedValue]
+#[ORM\Column(type: "integer")]
+private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $language;
+#[ORM\Column(type: "string", length: 255, nullable: true)]
+private ?string $language = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $abbreviation;
+#[ORM\Column(type: "string", length: 255, nullable: true)]
+private ?string $abbreviation = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $icon;
+#[ORM\Column(type: "string", length: 255, nullable: true)]
+private ?string $icon = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $isActive;
+#[ORM\Column(type: "boolean", nullable: true)]
+private ?bool $isActive = null;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $linkedInOther;
+#[ORM\Column(type: "boolean", nullable: true)]
+private ?bool $linkedInOther = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+#[ORM\Column(type: "integer", nullable: true)]
+private ?int $ranking = null;
 
-    public function getLanguage(): ?string
-    {
-        return $this->language;
-    }
+public function getId(): ?int
+{
+return $this->id;
+}
 
-    public function setLanguage(?string $language): self
-    {
-        $this->language = $language;
+public function getLanguage(): ?string
+{
+return $this->language;
+}
 
-        return $this;
-    }
+public function setLanguage(?string $language): self
+{
+$this->language = $language;
 
-    public function getAbbreviation(): ?string
-    {
-        return $this->abbreviation;
-    }
+return $this;
+}
 
-    public function setAbbreviation(?string $abbreviation): self
-    {
-        $this->abbreviation = $abbreviation;
+public function getAbbreviation(): ?string
+{
+return $this->abbreviation;
+}
 
-        return $this;
-    }
+public function setAbbreviation(?string $abbreviation): self
+{
+$this->abbreviation = $abbreviation;
 
-    public function getIcon(): ?string
-    {
-        return $this->icon;
-    }
+return $this;
+}
 
-    public function setIcon(?string $icon): self
-    {
-        $this->icon = $icon;
+public function getIcon(): ?string
+{
+return $this->icon;
+}
 
-        return $this;
-    }
+public function setIcon(?string $icon): self
+{
+$this->icon = $icon;
 
-    public function isIsActive(): ?bool
-    {
-        return $this->isActive;
-    }
+return $this;
+}
 
-    public function setIsActive(?bool $isActive): self
-    {
-        $this->isActive = $isActive;
+public function isIsActive(): ?bool
+{
+return $this->isActive;
+}
 
-        return $this;
-    }
+public function setIsActive(?bool $isActive): self
+{
+$this->isActive = $isActive;
 
-    public function getLinkedInOther(): ?bool
-    {
-        return $this->linkedInOther;
-    }
+return $this;
+}
 
-    public function setLinkedInOther(?bool $linkedInOther): self
-    {
-        $this->linkedInOther = $linkedInOther;
+public function getLinkedInOther(): ?bool
+{
+return $this->linkedInOther;
+}
 
-        return $this;
-    }
+public function setLinkedInOther(?bool $linkedInOther): self
+{
+$this->linkedInOther = $linkedInOther;
+
+return $this;
+}
+
+public function getRanking(): ?int
+{
+return $this->ranking;
+}
+
+public function setRanking(?int $ranking): self
+{
+$this->ranking = $ranking;
+
+return $this;
+}
 }

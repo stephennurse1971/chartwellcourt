@@ -39,22 +39,20 @@ class LanguagesRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Languages[] Returns an array of Languages objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Languages[] Returns an array of LanguagesService objects
+     */
+    public function getLanguagesByRankingOrder(): array
+    {
+        return $this->createQueryBuilder('l')
+            ->where('l.isActive = true')
+            ->orderBy('l.ranking', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
-//    public function findOneBySomeField($value): ?Languages
+//    public function findOneBySomeField($value): ?LanguagesService
 //    {
 //        return $this->createQueryBuilder('l')
 //            ->andWhere('l.exampleField = :val')

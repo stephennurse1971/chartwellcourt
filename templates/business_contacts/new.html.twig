@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Business Contact{% endblock %}
+
+{% block body %}
+    <h1 style="color: red">New Business Contacts</h1>
+    <button class="btn btn-primary " onclick="getLocation()">Get Coordinates</button>
+    {{ include('business_contacts/_form.html.twig') }}
+
+    <a class="btn btn-outline-primary btn-sm mt-1" href="{{ path('business_contacts_index') }}">Return to list</a>
+{% endblock %}
+{% block additionaljs %}
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showLocation);
+            } else {
+                $('#location').html('Geolocation is not supported by this browser.');
+            }
+        }
+
+        function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var pin = latitude + "," + longitude;
+            $("#business_contacts_gpsLocation").val(pin).change();
+            // $.ajax({
+            //     type:'POST',
+            //     url:'/location/pin/get/user/location',
+            //     data:'latitude='+latitude+'&longitude='+longitude,
+            //     success:function(msg){
+            //         if(msg){
+            //             $("#location").html(msg);
+            //         }else{
+            //             $("#location").html('Not Available');
+            //         }
+            //     }
+            // });
+        }
+
+        ClassicEditor
+            .create(document.querySelector('#business_contacts_notes'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+    <script>
+        $('document').ready(function () {
+            {% if 'ROLE_CLIENT' in app.user.roles %}
+            $('.status-container').hide();
+            {% endif %}
+        })
+    </script>
+{% endblock %}

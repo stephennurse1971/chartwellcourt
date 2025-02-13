@@ -5,12 +5,17 @@ namespace App\Controller;
 use App\Entity\Instructions;
 use App\Form\InstructionsType;
 use App\Repository\InstructionsRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/instructions')]
+/**
+ * @Route("/instructions")
+ * @Security("is_granted('ROLE_ADMIN')")
+ *
+ */
 class InstructionsController extends AbstractController
 {
     #[Route('/index', name: 'instructions_index', methods: ['GET'])]
@@ -29,21 +34,19 @@ class InstructionsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $instruction = $form->get('media')->getData();
-//            $instructionsRepository->add($instruction, true);
-
-            $originalFilename = pathinfo($instruction->getClientOriginalName(), PATHINFO_FILENAME);
-            $newFilename = $originalFilename->guessExtension();
+            $media = $form->get('media')->getData();
+            $originalFilename = pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename .".". $media->guessExtension();
             try {
-                $instruction->move(
-                    $this->getParameter('instructions_directory'),
+                $media->move(
+                    $this->getParameter('instructions_attachments_directory'),
                     $newFilename
                 );
                 $instruction->setMedia($newFilename);
             } catch (FileException $e) {
                 die('Import failed');
             }
-
+           $instructionsRepository->add($instruction, true);
 
             return $this->redirectToRoute('instructions_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -54,9 +57,10 @@ class InstructionsController extends AbstractController
         ]);
     }
 
-    #[Route('/show/{id}', name: 'instructions_show', methods: ['GET'])]
-    public function show(Instructions $instruction): Response
+    #[Route('/show/{topic}', name: 'instructions_show', methods: ['GET'])]
+    public function show(Request $request, string $topic, InstructionsRepository $instructionsRepository): Response
     {
+        $instruction=$instructionsRepository->findOneBy(['topic'=>$topic]);
         return $this->render('instructions/show.html.twig', [
             'instruction' => $instruction,
         ]);
@@ -69,6 +73,20 @@ class InstructionsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $media = $form->get('media')->getData();
+            if($media) {
+                $originalFilename = pathinfo($media->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename .".". $media->guessExtension();
+                try {
+                    $media->move(
+                        $this->getParameter('instructions_attachments_directory'),
+                        $newFilename
+                    );
+                    $instruction->setMedia($newFilename);
+                } catch (FileException $e) {
+                    die('Import failed');
+                }
+            }
             $instructionsRepository->add($instruction, true);
 
             return $this->redirectToRoute('instructions_index', [], Response::HTTP_SEE_OTHER);

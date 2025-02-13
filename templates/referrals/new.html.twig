@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Referrals{% endblock %}
+
+{% block body %}
+    <h1 style="color: red">New Referrals</h1>
+
+    {{ include('referrals/_form.html.twig') }}
+
+    <a class="btn btn-outline-primary btn-sm" href="{{ path('referrals_index') }}">Return to list</a>
+{% endblock %}

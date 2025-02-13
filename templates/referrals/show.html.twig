@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Referrals: {{ referral.businessSite }}{% endblock %}
+
+{% block body %}
+    <h1 style="color: red">Referrals</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ referral.id }}</td>
+            </tr>
+            <tr>
+                <th>DateTime</th>
+                <td>{{ referral.dateTime ? referral.dateTime|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Action</th>
+                <td>{{ referral.action }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-primary btn-sm" href="{{ path('referrals_index') }}">back to list</a>
+
+    <a class="btn btn-outline-danger btn-sm" href="{{ path('referrals_edit', {'id': referral.id}) }}">Edit</a>
+
+    {{ include('referrals/_delete_form.html.twig') }}
+{% endblock %}
